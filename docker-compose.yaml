@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  backend:
+    container_name: express
+    restart: always
+    build: ./back-end/
+    ports:
+      - "3000:3000"
+    links:
+      - database
+  database:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-volume:/data/db/
+  frontend:
+    container_name: angular
+    restart: always
+    build: ./front-end/
+    ports:
+      - "4200:4200"
+volumes:
+  mongo-volume:
+    external: true
